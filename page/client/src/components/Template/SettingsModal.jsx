@@ -92,7 +92,7 @@ const SettingsModalContent = ({ setSettingsOpen }) => {
           />
           <CardContent>
             <Typography component="h1" variant="h6" align="center">
-              Settings
+              Account Settings
             </Typography>
             <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
               <TextField
