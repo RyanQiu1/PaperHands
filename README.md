@@ -1,6 +1,6 @@
 # Orbital Apollo Project
 
-## Setup to load React App
+## Setup to load React
 
 Ensure that your public IP Address is added to the whitelisted IPs of MongoDB. 
 Ensure that the server is running before starting the client. 
