@@ -2,14 +2,10 @@
 
 ## Setup to load React App
 
-Ensure that your public IP Address is added to the whitelisted IPs of MongoDB.
+Ensure that your public IP Address is added to the whitelisted IPs of MongoDB. 
+Ensure that the server is running before starting the client. 
 
-* Step 1: starting the server up with npm
-  ```sh
-  npm start
-  ```
-
-  * Step 2: starting the client after server is running
+* Using npm to start up both the server and client
   ```sh
   npm start
   ```
