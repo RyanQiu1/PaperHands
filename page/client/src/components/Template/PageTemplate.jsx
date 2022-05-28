@@ -104,7 +104,7 @@ const PageTemplate = () => {
       user: undefined,
     });
     localStorage.setItem("auth-token", "");
-    navigate("/login");
+    navigate("/register");
   };
 
   const handleDrawerOpen = () => {
