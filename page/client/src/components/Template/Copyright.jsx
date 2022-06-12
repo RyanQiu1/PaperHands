@@ -6,7 +6,7 @@ const Copyright = () => {
     <div>
       <Typography variant="body2" color="textSecondary" align="center">
         {"Copyright © "}
-        <Link color="inherit" href="https://github.com/OktarianTB">
+        <Link color="inherit" href="https://auth-practice-5202.herokuapp.com/login">
           PaperHands
         </Link>{" "}
         {new Date().getFullYear()}
