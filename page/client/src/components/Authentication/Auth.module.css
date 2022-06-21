@@ -20,7 +20,9 @@
 .background {
   background-color: #4568dc;
   background: linear-gradient(315deg, #3a61e2 0%, #a65ca8 100%);
-  background-size: 400% 400%;
+  background-size: 100% 100%;
+  background-image: url("2.png");
+  background-color: #cccccc;
   animation: gradient 10s ease infinite;
   height: 100%;
   width: 100%;

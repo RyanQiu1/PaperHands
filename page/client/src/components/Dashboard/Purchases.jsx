@@ -8,6 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Title from "../Template/Title.jsx";
 import SaleModal from "./SaleModal";
 import styles from "./Dashboard.module.css";
+import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
 
 const Purchases = ({ purchasedStocks }) => {
   const [saleOpen, setSaleOpen] = useState(false);
@@ -22,10 +23,18 @@ const Purchases = ({ purchasedStocks }) => {
     setSaleOpen(true);
   };
 
+  function clickMe() {
+    alert("You clicked me!");
+  }
+  
   return (
     <React.Fragment>
       <div style={{ minHeight: "200px" }}>
         <Title>Stocks in Your Portfolio</Title>
+        <Button
+        title="Press me"
+        onClick={() => Alert.alert('Simple Button pressed')}
+      />
         <Table size="small">
           <TableHead>
             <TableRow>
@@ -98,6 +107,8 @@ const Purchases = ({ purchasedStocks }) => {
           <SaleModal setSaleOpen={setSaleOpen} stock={stock} />
         )}
       </div>
+
+      
     </React.Fragment>
   );
 };
