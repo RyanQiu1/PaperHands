@@ -21,9 +21,8 @@ app.use(cookieParser("secretcode"));
 console.log(process.env.MONGO_URI, process.env.MONGO_PASSWORD)
 
 const DB = process.env.MONGO_URI.replace(
-  "<password>",
-  process.env.MONGO_PASSWORD
-);
+    "<password>", process.env.MONGO_PASSWORD
+    );
 
 mongoose
   .connect(DB, {
@@ -47,14 +46,33 @@ app.use("/api/news", newsRouter);
 app.use("/api/stock", stockRouter);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.use(express.static("public"));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname + "/../client/build/index.html"));
+    res.sendFile(path.join(__dirname + "/public/index.html"));
   });
 }
 
 // APP
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+});
+
+app.post("/readpPython", (request, response) => {
+  var dataToSend;
+
+  const python = spawn('python3', ['script.py'], "welcome", "Duyen");
+
+  python.stdout.on('data', function (data) {
+    dataToSend = data.toString();
+  });
+  python.stdout.on('data', data => {  
+    console.error(`stderr: ${data}`);
+  });
+
+  python.on('exit', (code) => {
+    console.log(`child process exited with code ${code}, ${dataToSend}`);
+    response.sendFile(`${__dirname}/public/result.html`);
+  });
+
 });

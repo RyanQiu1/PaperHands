@@ -118,7 +118,7 @@ const PageTemplate = () => {
   const openSettings = () => {
     setSettingsOpen(true);
   };
-
+  
   return (
     <div className={styles.root}>
       <CssBaseline />
@@ -201,5 +201,8 @@ const PageTemplate = () => {
     </div>
   );
 };
+
+
+
 
 export default PageTemplate;

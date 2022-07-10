@@ -4,7 +4,7 @@ import styles from "./Search.module.css";
 
 const PriceCard = ({ pastDay }) => {
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={10}>
       <Grid item xs sm component={Card} className={styles.card}>
         <Typography color="textSecondary" align="center">
           Opening:
@@ -38,6 +38,8 @@ const PriceCard = ({ pastDay }) => {
         </Typography>
       </Grid>
     </Grid>
+    
+    
   );
 };
 
