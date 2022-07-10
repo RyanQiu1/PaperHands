@@ -1,6 +1,9 @@
 const Axios = require("axios");
 const data = require("../config/stocksData");
 
+
+
+
 exports.getStockMetaData = async (req, res) => {
   try {
     const url = `https://api.tiingo.com/tiingo/daily/${req.params.ticker}?token=${process.env.TIINGO_API_KEY}`;
@@ -47,7 +50,6 @@ exports.getStockHistoricData = async (req, res) => {
     const day = startDate.getDate();
 
     const url = `https://api.tiingo.com/tiingo/daily/${req.params.ticker}/prices?startDate=${year}-${month}-${day}&token=${process.env.TIINGO_API_KEY}`;
-
     const response = await Axios.get(url);
     const data = response.data;
 
@@ -128,6 +130,23 @@ const getRandomTicker = () => {
     name: data.stockData[randomIndex].name,
   };
 };
+
+
+exports.getStockFundamental = async (req, res) => {
+    const url = `https://api.tiingo.com/tiingo/fundamentals/${req.params.ticker}/daily?&token=${process.env.TIINGO_API_KEY}`;
+
+    const response = await Axios.get(url);
+    return res.status(200).json({
+      status: "success",
+      date: data[data.length - 1].date,
+      marketCap: data[data.length - 1].marketCap,
+      enterpriseVal: data[data.length - 1].enterpriseVal,
+        peRatio: data[data.length - 1].peRatio,
+      pbRatio: data[data.length - 1].pbRatio,
+   
+    });
+};
+
 
 exports.getRandomStockData = async (req, res) => {
   try {

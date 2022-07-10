@@ -23,18 +23,15 @@ const Purchases = ({ purchasedStocks }) => {
     setSaleOpen(true);
   };
 
-  function clickMe() {
-    alert("You clicked me!");
-  }
+  const onSearchButtonClick = (e) => {
+    e.preventDefault();
+    setCurrentPage("search");
+  };
   
   return (
     <React.Fragment>
       <div style={{ minHeight: "200px" }}>
         <Title>Stocks in Your Portfolio</Title>
-        <Button
-        title="Press me"
-        onClick={() => Alert.alert('Simple Button pressed')}
-      />
         <Table size="small">
           <TableHead>
             <TableRow>
