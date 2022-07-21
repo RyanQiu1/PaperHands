@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser("secretcode"));
 
+
 // DATABASE
 
 console.log(process.env.MONGO_URI, process.env.MONGO_PASSWORD)

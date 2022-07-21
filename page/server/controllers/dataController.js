@@ -2,8 +2,6 @@ const Axios = require("axios");
 const data = require("../config/stocksData");
 
 
-
-
 exports.getStockMetaData = async (req, res) => {
   try {
     const url = `https://api.tiingo.com/tiingo/daily/${req.params.ticker}?token=${process.env.TIINGO_API_KEY}`;
@@ -133,18 +131,22 @@ const getRandomTicker = () => {
 
 
 exports.getStockFundamental = async (req, res) => {
-    const url = `https://api.tiingo.com/tiingo/fundamentals/${req.params.ticker}/daily?&token=${process.env.TIINGO_API_KEY}`;
+  const url = `https://api.tiingo.com/tiingo/fundamentals/${req.params.ticker}/daily?&token=${process.env.TIINGO_API_KEY}`;
 
-    const response = await Axios.get(url);
-    return res.status(200).json({
-      status: "success",
-      date: data[data.length - 1].date,
-      marketCap: data[data.length - 1].marketCap,
-      enterpriseVal: data[data.length - 1].enterpriseVal,
-        peRatio: data[data.length - 1].peRatio,
-      pbRatio: data[data.length - 1].pbRatio,
-   
-    });
+  const response = await Axios.get(url);
+  const data = response.data;
+
+  return res.status(200).json({
+    status: "success",
+    informa: { 
+      date: data[1].date,
+      marketCap: data[1].marketCap,
+      enterpriseVal: data[1].enterpriseVal,
+      peRatio: data[1].peRatio,
+      pbRatio: data[1].pbRatio,
+      trailingPEG1Y: data[1].trailingPEG1Y,
+    },
+  });
 };
 
 
