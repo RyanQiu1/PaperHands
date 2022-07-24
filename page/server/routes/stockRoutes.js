@@ -8,4 +8,5 @@ router.route("/").patch(auth, sellStock)
 router.route("/:userId").get(auth, getStockForUser);
 router.route("/:userId").delete(auth, resetAccount);
 
+
 module.exports = router;

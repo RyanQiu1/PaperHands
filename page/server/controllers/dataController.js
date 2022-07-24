@@ -132,19 +132,99 @@ const getRandomTicker = () => {
 };
 
 
+exports.getStockRecommendation = async (req, res) => {
+  try{
+  const axios = require("axios");
+  const cheerio = require("cheerio");
+  const express = require("express");
+  const app = express();
+  
+  async function cryptopriceScraper() {
+    const url = "https://www.fortunebuilders.com/best-stocks-to-buy/";
+    const coinArray = [];
+    await axios(url).then((response) => {
+      const html_data = response.data;
+      const $ = cheerio.load(html_data);
+
+      const selectedElem =
+       "#wrapper > main > div:nth-child(4) > div > div.container.p-0.post-content > div.blog-content.pt-4.pb-4 > ol";
+    const keys = [
+      "name1",
+      "name2",
+      "name3",
+      "name4",
+      "name5",
+    ];
+
+    $(selectedElem).each((parentIndex, parentElem) => {
+      let keyIndex = 0;
+      const coinDetails = {};
+      if (parentIndex <= 5) {
+        $(parentElem)
+          .children()
+          .each((childId, childElem) => {
+            const value = $(childElem).text();
+            if (value) {
+              coinDetails[keys[keyIndex]] = value;
+              keyIndex++;
+            }
+          });
+        coinArray.push(coinDetails);
+      }
+    });
+  });
+    return coinArray;
+  }
+  const crypto = await cryptopriceScraper();
+  console.log(crypto);
+  return res.status(200).json({
+      status: "success",
+      informa: { 
+        recommendat: crypto,
+    },
+  });
+} catch (error) {
+    return res.status(200).json({
+      status: "fail",
+    });
+  }
+};
+
+
 exports.getStockFundamental = async (req, res) => {
+  try {
     const url = `https://api.tiingo.com/tiingo/fundamentals/${req.params.ticker}/daily?&token=${process.env.TIINGO_API_KEY}`;
 
-    const response = await Axios.get(url);
-    return res.status(200).json({
-      status: "success",
-      date: data[data.length - 1].date,
-      marketCap: data[data.length - 1].marketCap,
-      enterpriseVal: data[data.length - 1].enterpriseVal,
-        peRatio: data[data.length - 1].peRatio,
-      pbRatio: data[data.length - 1].pbRatio,
-   
+  const response = await Axios.get(url);
+  const data = response.data;
+
+  for (let i = response.data.length - 1; i >= 0; i -= 6) {
+    data.push({
+      date: response.data[i].date,
+      marketCap: response.data[i-1],
+      enterpriseVal: response.data[i-2],
+      peRatio: response.data[i-3],
+      pbRatio: response.data[i-4],
+      trailingPEG1Y: response.data[i-5],
     });
+  }
+
+  return res.status(200).json({
+    status: "success",
+    informa: { 
+      date: data[1].date,
+      marketCap: data[1].marketCap,
+      enterpriseVal: data[1].enterpriseVal,
+      peRatio: data[1].peRatio,
+      pbRatio: data[1].pbRatio,
+      trailingPEG1Y: data[1].trailingPEG1Y,
+    }
+  });
+  } catch (error) {
+    return res.status(200).json({
+      status: "fail",
+    });
+  }
 };
 
 

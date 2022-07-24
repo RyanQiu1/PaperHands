@@ -15,6 +15,9 @@ import PriceCard from "./PriceCard";
 import PurchaseCard from "./PurchaseCard";
 import PurchaseModal from "./PurchaseModal";
 import config from "../../config/Config";
+import Google from "./googletrend";
+import Boxer from "./Box.jsx";
+//import FundamentalCard from "./FundamentalCard";
 
 const filter = createFilterOptions();
 
@@ -63,7 +66,10 @@ const StockCard = ({ setPurchasedStocks, purchasedStocks, currentStock }) => {
   const [pastDay, setPastDay] = useState(undefined);
   const [pastMonth, setPastMonth] = useState(undefined);
   const [pastTwoYears, setPastTwoYears] = useState(undefined);
-  const [marketCap, setMarketCap] = useState(undefined);
+  const [informa, setData] = useState(undefined);
+  const [enterpriseVal, setEnterpriceVal] = useState(undefined);
+  const [peRatio, setPERatio] = useState(undefined);
+  const [pbRatio, setPBRatio] = useState(undefined);
 
   useEffect(() => {
     const getInfo = async () => {
@@ -90,10 +96,22 @@ const StockCard = ({ setPurchasedStocks, purchasedStocks, currentStock }) => {
     getData();
 
     const getFunda = async () => {
-      const url = config.base_url + `/fundamentals/${currentStock.ticker}`;
+      const url = config.base_url + `/api/data/fundamentals/${currentStock.ticker}`;
       const response = await Axios.get(url);
-      if (response.data.status === "success") {
-        setMarketCap(response.data.marketCap);
+      if (response.status === "success") {
+        setData(response.data.informa);
+        console.log(response.data.informa);
+      } else {
+        var res =  {
+          
+          date: "-",
+          marketCap: "-",
+          enterpriseVal: "-",
+          peRatio: "-",
+          pbRatio: "-",
+          trailingPEG1Y: "-",
+        }
+        setData(res);
       }
     };
 
@@ -123,6 +141,15 @@ const StockCard = ({ setPurchasedStocks, purchasedStocks, currentStock }) => {
           <PriceCard 
             pastDay={pastDay}
            />
+
+       
+         
+          <Google 
+            stockInfo={stockInfo.ticker}
+          />
+          <Boxer>
+
+          </Boxer>
           <Grid container spacing={3}>
             <PurchaseCard
               setSelected={setSelected}
@@ -146,6 +173,7 @@ const StockCard = ({ setPurchasedStocks, purchasedStocks, currentStock }) => {
               purchasedStocks={purchasedStocks}
             />
           )}
+
         </div>
       )}
     </div>
@@ -205,6 +233,7 @@ const Search = ({ setPurchasedStocks, purchasedStocks }) => {
           setPurchasedStocks={setPurchasedStocks}
           purchasedStocks={purchasedStocks}
           currentStock={currentStock}
+          
         />
       )}
       <br />
